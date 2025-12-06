@@ -1,0 +1,123 @@
+
+//Scaling 
+| Feature     | Horizontal Scaling        | Vertical Scaling        |
+| ----------- | ------------------------- | ----------------------- |
+| Method      | Add more systems          | Upgrade existing system |
+| Cost        | Usually cheaper long-term | Usually expensive       |
+| Downtime    | No                        | Possible                |
+| Limit       | Potentially unlimited     | Limited                 |
+| Flexibility | High (distributed)        | Low (single machine)    |
+
+ Horizontal = more machines → distributed load → flexible & scalable
+ Vertical = beefier machine → centralized load → limited scaling
+  in vertical upgradign the system means add more cpus,ram or storage 
+
+  //NIST def of CC 
+  “Cloud computing is a model for enabling
+    ubiquitous, convenient, on-demand network
+    access to a shared pool of configurable computing
+    resources (e.g., networks, servers, storage,
+    applications, and services) that can be rapidly
+    provisioned and released with minimal
+    management effort or service provider interaction”.
+
+Essential features of cloud computing 
+ 1. On Demand self-service 
+ 2. Measured service 
+ 3. Broad network access 
+ 4. Rapid Elasticity 
+ 5. Resource pooling 
+
+ On-Demand Self-Service : 
+    Users can provision (get) and release resources whenever they need them.
+    No human interaction with the service provider is required
+ Broad Network Access :
+    Cloud resources are accessible over the network.
+    Can be accessed from any device: 
+    Ensures flexibility and mobility.
+ Resource Pooling :
+    Cloud provider maintains a shared pool of resources (CPU, storage, network).
+    Resources are dynamically allocated/deallocated to multiple users based on demand.
+ Rapid Elasticity :
+    Resources can be scaled up or down quickly to meet demand.
+    Users get the illusion of unlimited resources even though physical resources are finite.
+ Measured Service :
+    Cloud usage is monitored, controlled, and billed based on consumption.
+    Like a pay-as-you-go model.
+
+//SLA - the warranty for cloud services 
+    SLA = Service Level Agreement
+    It’s a formal contract between a cloud service provider and a client.
+    Specifies what the provider promises in terms of service quality, security, and support
+  key components of an SLA 
+    . Availability and Performance
+    . Security / Privacy of Data
+    . Disaster Recovery Expectations
+    .  Location of the Data
+    . Access and Portability 
+    . Problem Resolution Process
+    . Dispute Mediation
+    . Exit Strategy
+
+//Enabling technologies for cloud computing 
+ 1. virtualisation 
+ 2. web 2.0
+ 3. Service oriented architecture 
+ 4. browser as a platform 
+ 5. parallel processing 
+
+//Virtualisation 
+  Virtualization is a core technology of cloud computing.
+  It allows the creation of multiple computing environments on a single physical machine.
+ \These environments are called virtual because they behave like real hardware/OS but are actually simulated by software.
+
+  hardware virtualisation most common 
+   multiple os or software stacks can run on teh same physical hardware 
+    eg: windows and linux on the same server 
+  Virtual machines (VMs)
+    Each environment runs in a VM instance.
+    VMs operate in complete isolation from each other.
+    Ensures security and stability: one VM crashing doesn’t affect others.
+  eg: A cloud server may host several VMs: one running a web server, another running a database server, all on the same physical hardware.
+
+//benefits 
+  Resource Utilization: Makes better use of physical hardware.
+  Isolation: Each VM is independent.
+  Flexibility: Easy to deploy, move, or scale environments.
+  Cost Efficiency: Multiple software stacks on one machine reduces hardware costs.
+
+    | Concept                  | Explanation                                                                                                                                                                                          |
+    | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **Virtualization**       | The **technology/concept** that allows creating multiple simulated computing environments on a single physical machine. It’s the **underlying idea** that makes cloud computing possible.            |
+    | **Virtual Machine (VM)** | The **actual instance/application** of virtualization. A VM is a **container** or environment that runs on top of the virtualized hardware, complete with its own operating system and applications. |
+
+
+// Web 2.0
+  The Web is the primary interface through which cloud
+computing delivers its services.
+  
+  Web 2.0 enables developers to architect applications and
+deliver services through the Internet.
+  . You don’t need to install heavy software locally; the web itself becomes the gateway to cloud computing.
+  . Web 2.0 introduced interactivity and flexibility in websites
+  . Developers can now build rich applications that run in a browser and communicate with servers in real-time.
+
+  technologies behind web 2.0 
+
+
+| **Enabling Technology**                 | **How It Supports Cloud Computing**                                |
+| --------------------------------------- | ------------------------------------------------------------------ |
+| **Virtualization**                      | Resource abstraction, multi-tenancy, scalability                   |
+| **Service-Oriented Architecture (SOA)** | Modular services, integration, reusable APIs                       |
+| **Web 2.0**                             | User-driven, interactive, collaborative cloud apps                 |
+| **Browser as a Platform**               | Access cloud services anywhere, no installation needed             |
+| **Parallel Processing**                 | Fast computing, large-scale task execution, efficient resource use |
+
+service oriented computing 
+ it is a reference model 
+ it adopts the concept of services as the main building bloacks of application and system development 
+ service shoul dbe loosely coupled , reusable , langauge independent , location transparent 
+
+ it introduces qos, saas 
+ qos -> identifies a set of functional and non-functional attributes that can be used to evaluate the behaviour of a service from different perspectives 
+ 

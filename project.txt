@@ -1,0 +1,12 @@
+
+difference between traditional setup without autoscaling and with autoscaling(EC2)
+1. traditional setup :
+   we predefine ec2 instances 
+   it is waste when requests are less compared to the ec2 instances its costly 
+
+2. autoscaling :
+   it gives you flexibility either to increase or decrease the ec2 instances 
+
+   ec2 instance is the server like 
+   you assign min,max,desired instances  in the autoscaling group 
+

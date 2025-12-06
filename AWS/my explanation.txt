@@ -1,0 +1,81 @@
+
+ slide 1: 
+    “Good morning everyone. My name is Pardhuva Bheemarati, and my project topic is ‘Serverless Blue-Green Deployment.’”
+
+
+ slide 2: 
+     Now, let me explain the motivation behind choosing Serverless Blue-Green Deployment.
+
+     First, why serverless? The main advantage is no server management—AWS takes care of 
+      provisioning, scaling, and maintenance, so we can focus on the application itself. 
+
+     Secondly, it’s cost-efficient, because we only pay for the actual execution time, not idle servers. 
+      Serverless also provides automatic scalability, handling multiple requests without manual intervention.
+
+     Finally, it allows quick deployment, which is great for small applications that need frequent updates.
+
+ slide 3: 
+      Now let’s look at the Blue-Green Deployment Architecture.
+
+      Suppose we have an updated version of our application that we want to release
+      Instead of replacing the current version directly—which could cause errors or downtime—we use Blue-Green Deployment.
+      This strategy maintains two identical environments: the Blue environment, which is the current stable version serving users, 
+      and the Green environment, where we deploy the updated version separately for testing.
+      Once the Green version is verified, we can switch traffic seamlessly, ensuring a safe update."
+
+      This approach has several benefits: it enables zero-downtime updates, provides a safe rollback if the new version fails, 
+      and lets us test the new version with real users before a full rollout.
+
+      how traffic switching works: initially, 100% of traffic goes to Blue.
+       We then shift a small percentage, say 10%, to Green and monitor its performance. 
+       If everything is stable, we gradually shift all traffic to Green. 
+       If any issues occur, we can rollback immediately to Blue without affecting users.
+
+      explain with diagram 
+
+      Once all traffic is shifted to Green and it becomes stable, 
+      the roles swap: the current Green now acts as Blue—the live environment—and the previous Blue becomes the new Green for the next update. 
+      This way, we can continuously deploy new versions with minimal risk and no downtime."
+
+slide 4: 
+      
+      Now, let me explain the implementation process of our Serverless Blue-Green Deployment.
+
+      Step 1: Version Creation
+        We start by creating separate Lambda function versions for Blue and Green. 
+        We deploy changes to the Lambda functions and assign aliases, ‘Blue’ and ‘Green,’ to maintain different code versions for each environment. 
+      
+      Step 2: Green Development
+        Next, we deploy the updated Green version—for example, with small UI changes—using a new Lambda version.
+        Initially, we set its traffic to 0% to allow safe and isolated testing without affecting users.
+
+      Step 3: Testing & Validation
+        Before shifting any traffic, we manually test the Green version by calling its endpoints directly. 
+        We verify that all core functionalities, like adding, viewing, and deleting tasks, work correctly, and that UI updates appear as expected.
+
+      Step 4: Traffic Migration
+       Finally, we use Lambda alias weighted traffic shifting(weighted routing) to gradually move traffic from Blue to Green. 
+       We start with 10% traffic, monitor the frontend behavior, and once stable, shift 100% traffic to Green. 
+       In case of any issue, we can rollback instantly by reverting the alias, ensuring no disruption to users."*
+    
+      Lambda Versions:
+        Every time you deploy a Lambda function, you can create a version (immutable snapshot of the code).
+        Example: Version 1 (Blue), Version 2 (Green).
+      Aliases :
+          Aliases are pointers to a specific Lambda version.
+          Example: Alias Blue → Version 1, Alias Green → Version 2.
+      Weighted Routing:
+           AWS lets you assign weights to aliases so traffic is split between versions.
+           Example: Blue 90%, Green 10%.
+           Gradually, you can shift Green to 100% by updating weights.
+      Rollback:
+            If issues occur, you adjust the weights back (100% traffic to Blue).
+
+        
+    By combining serverless computing with Blue-Green Deployment, we achieve scalability, cost efficiency, 
+     and reliability, making frequent updates safe and efficient for real users. 
+     This strategy ensures a smooth user experience while minimizing risks during deployment."
+
+     
+
+     

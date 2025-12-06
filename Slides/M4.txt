@@ -1,0 +1,261 @@
+
+//Amazon cloud 
+  aws provides on demand delivery of IT resources via the internet on a secure cloud services platform , offering comoute power,storage,databses, deliveyr and other functionalities to help businesses scale adn grow 
+
+  six advantages 
+   ✅ Six Advantages (from the image)
+
+    Global in minutes
+    – You can deploy applications worldwide instantly.
+
+    Variable vs. capital expense
+    – Pay only for what you use (OPEX), not large upfront costs (CAPEX).
+
+    Economies of scale
+    – Cloud providers reduce costs by serving millions, giving you cheaper resources.
+
+    Increase speed and agility
+    – You can test, launch, and scale faster.
+
+    Focus on business differentiators
+    – Spend less time on infrastructure and more on innovation.
+
+    Stop guessing capacity
+    – Resources automatically scale up/down; no need to predict demand.
+
+//Deployment models
+ 1. All-in clodu based model 
+    Everything runs in the cloud.
+    No servers or infrastructure on your premises.
+    The entire application (storage, processing, database, networking) is hosted on a cloud provider.
+    ex: A company runs its website, database, and all services completely on AWS/Azure/Google Cloud.
+ 2. Hybrid Cloud Model
+    Mix of cloud + on-premises (existing data center).
+    Some parts run in the cloud, some parts remain in your local servers.
+    They are connected and work together.
+    ex: A company keeps sensitive data in its own data center but uses the cloud for backups or running web apps.
+
+
+1. Enterprise applications(top layer)
+   These are complete applications used by end-users.
+   ex: mobile services, virtual desktops 
+
+2. Platform Services (Middle Layer)
+These are developer-friendly tools and services used to build applications.
+  databases - relational,nosql, caching 
+  analytics - hadoop , real-time analytics 
+  app services - orchestration,email,app streaming 
+  mobile services - identity ,sync, notifications 
+  deployment & management - containers, devops tools ,monitoring 
+
+3. Foundation Services (Lower Layer)
+ These are basic cloud building blocks:
+ compute - vms,autoscling , load balancing 
+ storage - object storage, block storage, 
+ security - access control , cloud security tools 
+ networking - virtual networks, connectivity 
+
+4. Infrastructure (Bottom Layer)
+This is the underlying global cloud infrastructure.
+ Regions - Geographical areas where cloud services exist.
+ Availability Zones- Multiple data centers within a region for reliability
+ Content Delivery Networks (CDN) -Fast delivery of content worldwide.
+
+
+Top: Ready-made apps
+Middle: Developer tools
+Lower: Compute + storage + network + security
+Bottom: Physical infrastructure (regions, zones, CDN)
+
+
+//overview on cloud services 
+
+1. Accessing the platform 
+  The AWS Management Console
+  • A web application for managing AWS Cloud services.
+  The AWS Command Line Interface (CLI)
+  • A unified tool used to manage AWS Cloud services
+  The AWS Software Development Kits (SDKs)
+    • Provide an application programming interface (API) that interacts with the
+    web services that fundamentally make up the AWS platform.
+
+//computing and network services 
+   AWS provides a variety of compute and networking services to deliver
+  core functionality for businesses to develop and run their workloads.
+
+ 1. Amazon EC2 (elastic compute cloud )
+   ec2 gives you virtual machines in the cloud 
+   You can choose the operating system, install your own apps, and control network settings.
+   It is like renting a computer from AWS where you control everything.
+   think : “A cloud server you manage yourself.”
+
+ 2. AWS Lambda 
+   Lambda lets you run your code without servers
+   You don’t manage machines — AWS runs your code automatically whenever needed.
+   It uses EC2 machines internally but you never see or manage them.
+   It automatically scales, is secure, and works across multiple Availability Zones.
+
+   | Feature  | EC2                    | Lambda                              |
+| -------- | ---------------------- | ----------------------------------- |
+| Control  | Full control of server | No server management                |
+| Billing  | Pay for running time   | Pay per request                     |
+| Use case | Long-running apps      | Small functions, event-driven tasks |
+
+
+ 3. Elastic load balancing 
+   ELB automatically spreads incoming traffic across multiple EC2 instances.
+   This helps your application stay available, balanced, and fault-tolerant.
+   If one server is busy or fails, ELB sends traffic to other healthy servers.
+
+ 4. AWS Elastic Beanstalk
+    Beanstalk is the quickest and easiest way to deploy a web application on AWS.
+    You just upload your code, and Beanstalk does everything for you.
+    It automatically handles:
+     servers,load balancig ,autoscaling,monitoring environment setup 
+
+     Upload your app → AWS builds, runs & manages everything.”
+    
+    | Feature         | Elastic Load Balancing | Elastic Beanstalk                              |
+| --------------- | ---------------------- | ---------------------------------------------- |
+| Purpose         | Distributes traffic    | Deploys & manages entire app                   |
+| What it handles | Incoming requests      | Servers + scaling + load balancer + monitoring |
+| User job        | Manage servers         | Just upload code                               |
+
+
+| Feature       | Elastic Beanstalk                    | AWS Amplify                               |
+| ------------- | ------------------------------------ | ----------------------------------------- |
+| Main use      | Deploy backend/server apps           | Deploy frontend or full-stack apps        |
+| App type      | Web apps (server-side)               | Web & mobile (client-side)                |
+| Languages     | Java, Node.js, Python, PHP, .NET, Go | React, Angular, Vue, Next.js, Flutter     |
+| Backend       | Runs on EC2 + load balancer          | Usually serverless APIs (Lambda, AppSync) |
+| Who uses it   | Backend developers                   | Frontend/mobile developers                |
+| Control level | More control over servers            | Less control, more automation             |
+
+ 5. AWS VPC(virtual private cloud) 
+     VPC lets you create your own private network inside AWS.
+     you decide ip address range,subnets,route tables,gateway 
+   It is logically isolated, meaning your network is private and protected.
+
+ 6. AWS Direct Connect
+   Direct Connect gives you a dedicated physical connection from your on-premise data center to AWS.
+   It does not use the public internet.
+   it is faster,more secure, more reliable , lower latency 
+
+   VPC = Your private network in AWS
+  Direct Connect = Your private link from data center to AWS
+
+
+//overview of storage and content delivery 
+  7. AWS S3 (system storage service )
+     S3 is a cloud storage service where you can store unlimited data as objects.
+     Stores any amount of data.
+     Stores any type of data (images, videos, code, HTML, backups, logs, etc.).
+     Can handle millions of users at the same time
+     Extremely durable (data is safe) and scalable (you can keep adding data).
+     Data is accessed through the internet using HTTP/HTTPS.
+
+ 8. Amazon EBS (Elastic Block Store)
+    EBS is block-level storage used with EC2 instances.
+    It works like a virtual hard disk attached to your EC2 server.
+    Persistent storage → Data stays even after the EC2 instance stops
+    Automatically replicated inside the same Availability Zone →
+    protects your data from hardware failures.
+    High performance + low latency → Good for databases, OS files, and applications
+
+ 9. Amazon CloudWatch
+   CloudWatch is a monitoring service in AWS.
+   Tracks metrics (CPU usage, memory, network, etc.)
+   Collects and watches log files
+   lets you set alarms (e.g., send alert if CPU > 80%)
+   Helps monitor applications, EC2, Lambda, RDS, VPC, etc.
+
+   “A monitoring dashboard for everything happening in your AWS environment.”
+   it helps us see resource usgae,application performance, system health, erros and logs 
+
+   This gives complete visibility into how their cloud systems are working.
+
+
+
+✅ AWS BITS – Question Fragment + Answer
+1. AWS provides on-demand…
+
+✔ IT resources like compute, storage, databases over the Internet
+
+2. All-in Cloud model means…
+
+✔ Everything is fully deployed in the cloud
+
+3. Hybrid Cloud means…
+
+✔ Some resources on-premise + some in the cloud
+
+4. AWS Region is…
+
+✔ A geographic area containing multiple Availability Zones
+
+5. Availability Zone means…
+
+✔ One or more isolated data centers inside a region
+
+6. AWS Console is…
+
+✔ A web UI to manage AWS services
+
+7. AWS CLI is…
+
+✔ A command-line tool to control AWS services
+
+8. AWS SDK provides…
+
+✔ APIs for interacting with AWS in code
+
+🌐 Compute & Networking
+9. EC2 provides…
+
+✔ Virtual machines in the cloud
+
+10. Lambda provides…
+
+✔ Serverless compute without managing servers
+
+11. Load Balancer does…
+
+✔ Distributes traffic across EC2 instances
+
+12. Auto Scaling does…
+
+✔ Automatically adds/removes EC2 instances based on demand
+
+13. Elastic Beanstalk allows…
+
+✔ Fast application deployment by uploading code
+
+14. VPC lets you create…
+
+✔ A private virtual network inside AWS
+
+15. Direct Connect provides…
+
+✔ A dedicated private link from data center to AWS
+
+📦 Storage
+16. S3 stores data as…
+
+✔ Objects
+
+17. EBS provides…
+
+✔ Block-level storage for EC2
+
+18. EBS is replicated…
+
+✔ Within the same Availability Zone
+
+📊 Monitoring
+19. CloudWatch is used for…
+
+✔ Monitoring metrics, logs, and setting alarms
+
+20. CloudWatch Alarms notify when…
+
+✔ A metric crosses a threshold

@@ -1,0 +1,309 @@
+
+Virtualization is the technique of creating a virtual (not physical) version of something — like a computer, server, storage, or network.
+A virtual machine (VM) is a virtual environment that acts like a separate computer.
+
+//virtualization 
+
+when a user request for resoources we create virtual machines for eahc user which works under virtualization means 
+ it means a illusion of something which is not actually present so the user thinks he have the resources for explicit use 
+ but many vms are created under the same resources hardware but still there is a isolation from one another 
+
+ . When a user requests resources, the cloud provider creates a virtual machine (VM) for them.
+ . The VM is managed using virtualization, which provides the illusion of dedicated hardware — the user feels like they have their own CPU, RAM, and storage.
+ . In reality, many VMs share the same physical hardware (CPUs, memory, storage), but the hypervisor ensures isolation: one VM cannot directly access or interfere with another.
+ . This allows efficient utilization of resources while still giving each user a separate, secure environment.
+
+ virtualisation -> creating an illusion of simething which is not actually present 
+  . virtual memory : illusion of large memory than we physically have 
+  . virtual reality : games allow users to percieve the world that doent exist 
+
+  virtualisation is obtained using timesharing systems btw the vms 
+ timesharing : 
+    creates illusion of multiple jobs being processed at same time evnthough only one executes 
+
+
+IBM CP/CMS full virtualisation 
+ before only timesharing -> only hardware resources virtualisation but all share one os instance 
+ but IBM (control program/cambridge monitor system) to allwo multiple users to run on a single mainframe 
+  each vm is assigned with its own virtual os instance not like before same os instance 
+  this led to isolation, reliability , flexibility 
+
+//need of virtualisation in data centers 
+ suppose a company has different departments 
+ if we give eahc department a data center this leads to resources wastage 
+ so we use virtualisation 
+ so each depatmetn is given a vm under the same data centers usign the same resoruces but given isolation 
+    one department workload doesnt affect others 
+    each vm can run on its own os,applications,configurations 
+this lead to better resource utilization 
+
+
+//virtualisation overview 
+    def : Virtualization is the creation of a virtual version of something — this could be:
+    . hardware , software, storage, network 
+
+    //threee major components 
+    1.guest , 2. host 3. virtualization layer 
+
+    | Component                | Description                                                                                                                                      | Example                                                                 |
+    | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+    | **Guest**                | The virtual system that runs **inside the virtual environment**. It interacts with the virtualization layer, not the physical hardware directly. | A VM running Windows or Linux, running apps like Excel or Apache server |
+    | **Host**                 | The **physical machine** or environment that provides resources (CPU, RAM, storage) for the guest.                                               | Your physical server with 8 CPUs and 32 GB RAM                          |
+    | **Virtualization Layer** | The **software layer** that manages resource allocation, isolation, and scheduling, allowing guests to operate independently of the host.        | Hypervisor (e.g., VMware ESXi, KVM, Hyper-V)                            |
+
+  //how it works 
+    . The guest OS thinks it’s running on its own machine.
+    . The virtualization layer intercepts requests from the guest to access hardware and either:
+       . Maps it directly to physical resources (pass-through)(for temporary basis ), or
+       . Emulates the resource virtually.
+    . The host provides the actual physical resources (CPU cycles, memory, storage).
+   
+    //what  can be virtualized 
+     1.desktop, application, server, storage , network 
+   
+//levels of virtualization 
+    1. application level  - (jvm)
+    2. library support level  -(mingw)
+    3. operating systems level - (docker)
+    4. hardware abstraction level - (xen)
+    5. instruction set architecture level - (ISA)
+
+//virtualisation addresses issues/challenges 
+  
+    | Challenge                          | How Virtualization Helps       | Benefit                    |
+    | ---------------------------------- | ------------------------------ | -------------------------- |
+    | Low performance / limited capacity | Run multiple VMs on one server | Maximized CPU/memory usage |
+    | Underutilized resources            | Consolidate workloads          | Efficient resource usage   |
+    | Lack of space                      | Reduce physical servers        | Saves data center space    |
+    | High energy & cooling              | Server consolidation           | Lower energy footprint     |
+    | High administrative costs          | Fewer servers to manage        | Reduced staffing costs     |
+
+    if the server is overloaded then do migration to ther servers 
+    if some servers are underutilized then do consolidation means give the underused server load to other server 
+
+    | Situation                            | Action                                                      |
+    | ------------------------------------ | ----------------------------------------------------------- |
+    | Server overloaded, existing VMs slow | **Migrate VMs** to other servers; do **not** create new VMs |
+    | Server has free resources            | **Create new VMs** to run additional apps or workloads      |
+    | Need isolation/testing               | **Create VMs**, even if CPU is not fully used               |
+
+  if you created a vm on the server and still the performance is low then dont create more vms this doesnt guarantee you more performance 
+   this lead to overloading 
+
+ //creating an instance 
+   when you create a VM(instance) in a data center, it runs on a physical server 
+   that server provides the cpu,memory,storage and network for the vm 
+
+//what happens if there is lack of space 
+ lack of space mean snot enough physical servers ot host new vms 
+ existing servers are underutilized but vms are scattered across too many servers 
+ //then use virtualisation 
+   server consolidation : move multiple vms onto fewer physical servers 
+   this frees up physical servers that were mostly idle 
+
+
+//characteristics of virtualization 
+| Characteristic | What it Does                                   | Benefit                                   |
+| -------------- | ---------------------------------------------- | ----------------------------------------- |
+| Security       | Controls VM execution transparently            | Prevents attacks, safe environment        |
+| Sharing        | Multiple VMs on same server                    | Efficient use of resources                |
+| Aggregation    | Combine multiple servers into one virtual host | Powerful virtual machine for guests       |
+| Emulation      | Create environment different from host         | Run software needing specific OS/hardware |
+| Isolation      | VMs separated from each other and host         | Stability and safety                      |
+
+
+//execution virtualisation 
+Definition: Techniques that create a virtual execution environment separate from the physical host.
+Purpose: Allows programs (guests) to run as if they are on their own independent machine, even though they share the host hardware.
+Key idea: The virtual environment emulates CPU, memory, and I/O, making the guest think it has its own dedicated system.
+
+machine reference model 
+//a model that defines how different layers of a computing stack interact 
+  Virtualization replaces or inserts itself at a certain layer.
+  so it intercepts requests from layer above adn receives the requsta dn dsend to the hardware 
+
+| Concept                  | Explanation                                                                                |
+| ------------------------ | ------------------------------------------------------------------------------------------ |
+| Execution virtualization | Creates a separate, virtual environment for running programs                               |
+| Machine reference model  | Defines interfaces between layers so virtualization can intercept calls                    |
+| Layer replacement        | Virtualization **replaces a layer** (e.g., OS or hardware) and manages requests from above |
+
+emulates -> pretends to something else 
+
+
+//machine learning refference model 
+applications -> (api calls) libraries -> (system calls) os ->(Isa) hardware 
+here virtualisation(hypervisor) sits between guest os and hardware 
+if the ISA (for cpu ) is same as request then normal virtualisation 
+if different then use ISA level virtulisation to translates instructions 
+
+
+//Hardware level virtualisation 
+A technique that creates a virtual version of a physical computer.
+On this virtual computer, you can run a guest operating system just like it’s on a real machine.
+
+    //how it works 
+     1. hypervisor sits between guest os nad hardware 
+     2. It emulates the physical hardware so the guest OS thinks it’s running on a real machine.
+     3. It allocates CPU, memory, storage, and I/O devices to each VM safely.
+  
+   it is called as system virtualisation 
+    Because it virtualizes the whole system hardware (CPU, memory, devices) for the guest OS.
+    It provides the ISA (instruction set interface) to the VM, so programs inside the guest can run as if on real hardware.
+
+ so the difference between hardware virtualisation is that it has its own guest os
+     
+** so in normal virtualisation when request is sen tfrom application then it reaches the hypervisor then it goes to host os and solves those 
+** hardware virtualisation each vm has its own os each guest os can handle that request then request resrouces frm host and solve them internally 
+
+//hypervisor 
+it si a software that mediates between the vms and the underlying hardware 
+also called VMM (virtual machine manager )
+
+//Type 1 hypervisor 
+    Runs directly on physical hardware — no host OS required.
+    Manages hardware and multiple VMs directly.
+    Often used in data centers and enterprise servers.
+key points : 
+ High performance, low overhead.
+ Strong isolation between VMs.
+ //flow 
+ Hardware → Type-1 Hypervisor → Guest OS / VMs → Applications
+ ex:vmware ESXi
+ 
+ //type 2 hypervisor 
+ Runs on top of a host OS, just like a normal application.
+ VMs run on this hypervisor.
+
+  Easier to install and use on desktops or laptops.
+  Slightly lower performance due to host OS layer.
+
+  //flow 
+  Hardware → Host OS → Type-2 Hypervisor → Guest OS / VMs → Applications
+  ex: oracle virtual box 
+
+   | Feature     | Type-1 Hypervisor         | Type-2 Hypervisor              |
+| ----------- | ------------------------- | ------------------------------ |
+| Runs on     | Bare metal (hardware)     | Host OS                        |
+| Performance | High                      | Lower (extra host OS layer)    |
+| Use case    | Servers, data centers     | Desktops, testing environments |
+| Isolation   | Strong                    | Moderate                       |
+| Examples    | VMware ESXi, Xen, Hyper-V | VMware Workstation, VirtualBox |
+
+//VMM consists of 3 modules 
+ 1. dispatcher 
+ 2. allocator 
+ 3. interpreter 
+
+ 1.dispatcher 
+   entry point of vmm 
+   Receives requests from the VM and decides where to send them: either to the allocator or the interpreter.
+ 2. allocator 
+    Decides how much physical resources (CPU, memory, I/O) to give to each VM.
+    Invoked by the dispatcher when a VM needs resources.
+ 3. interpreter 
+      Handles privileged instructions that a VM cannot execute directly on hardware.
+      vm cannot execute these directly so interpreter executes these instruction on behalf of the vm 
+
+//conditions for VMM to wrok efficiently 
+ 1. equivalence 
+   A VM should behave exactly like a real physical machine.
+   Programs inside the VM shouldn’t “know” they are virtualized — they should run as if on actual hardware.
+ 2. resource control 
+     The hypervisor must fully control all virtualized resources: CPU, memory, storage, and I/O.
+     Prevents VMs from interfering with each other or using more resources than allowed.
+ 3. efficiency 
+     Most instructions executed by the VM should run directly on the hardware without going through the hypervisor.
+      Minimizes performance overhead from virtualization.
+      normal aritmetic and all those operations execute natively only previleged instruction trigger the hypervisor 
+
+
+//protection ring concept 
+   Protection rings are a way to control access to computer resources in a layered manner.
+   They define levels of privilege for code execution in the CPU.
+
+   //common rings 
+     | Ring       | Privilege Level | Typical Use                                             |
+    | ---------- | --------------- | ------------------------------------------------------- |
+    | **Ring 0** | Highest         | Operating system kernel, hypervisors, device drivers    |
+    | Ring 1     | Medium          | OS services (sometimes used, not common in modern OSes) |
+    | Ring 2     | Medium          | OS services / drivers (rare)                            |
+    | **Ring 3** | Lowest          | User applications (browsers, word processors, games)    |
+
+  this gives 
+    security , stability 
+  hypervisors often run in ring 0 
+  Guest OS may also want Ring 0 privileges, but the hypervisor intercepts them to maintain control.
+  but this causes problem wgen guest os issues privileged instructions the hypervisor tranaslate before passign to hardware 
+
+
+//hardware virtualisation techniques 
+1. full virtualisation 
+   Full virtualization allows you to run an guest(unmodified) operating system on a virtual machine as if it were running on real hardware.
+   vmms are required to provide a complete emulation fo the entire underlying hardware 
+   this leads to complete isolation , more security 
+   //how it works 
+   1. hypervisor operates at ring0 
+   2. it manages all hardware access to the guest os 
+   3. guest tries to execute all previliges instructions 
+   4. to guest os it feel slike talking directly to hardware 
+   5.Hypervisor intercepts and translates these instructions but hypervisor secretly manages it 
+   6. each vm is completely isolated 
+
+ Full Virtualization creates completely separate virtual machines (VMs),
+ each running its own full operating system — as if it were running on real, physical hardware.
+
+//para virtualisation 
+   Para-virtualization is a technique where the guest OS is slightly modified to interact with the hypervisor efficiently.
+   Instead of trying to execute privileged instructions directly, the guest OS makes explicit calls (hypercalls) to the hypervisor.
+
+  //how it works 
+  1. guest os is modified so it doesnt execute previliged instruction 
+  2. it executes hypercalls to the hypervisor 
+  3. hypervisor executees the operation safely 
+
+  | Aspect                  | Full Virtualization                         | Para-Virtualization                                            |
+| ----------------------- | ------------------------------------------- | -------------------------------------------------------------- |
+| Guest OS                | Unmodified                                  | Modified                                                       |
+| Privileged Instructions | Guest OS executes, hypervisor traps/handles | Guest OS **does not execute directly**, always uses hypercalls |
+| Performance             | Slight overhead (trapping instructions)     | Better performance (direct hypercall)                          |
+| Flexibility             | Can run unmodified OS                       | Requires OS modification                                       |
+
+ *Paravirtualization is a type of virtualization where the guest OS is slightly modified so
+ it can communicate directly with the hypervisor — instead of pretending it's running on real hardware.
+
+//partial virtualisation 
+   Partial virtualization only emulates some aspects of hardware, not everything.
+   The guest OS cannot run completely in isolation, and some privileged operations might not be supported.
+   ex: address sppace virtualisation used in time sharing systems 
+   allows many applications to run concurrently sharing the same hardware resources 
+ 
+ * Partial Virtualization means only some parts of the hardware (like memory or CPU) are virtualized —
+   so the guest OS can run, but not every feature of the system is fully emulated or isolated.
+ 
+//hardware-assisted virtualisation 
+    requires hardware support to help virtualisation 
+    allows full isolation of guest so while improving performance 
+    sam elike full virtualisation 
+so simply hardware hepls hypervisor 
+It allows virtual machines to run unmodified guest OSes with better performance.
+
+//operating system-level virtualisation 
+   A technique to create multiple isolated execution environments on a single OS.
+   no hypervisor 
+   The same OS kernel is shared among all instances.
+
+   how it works 
+   1. isolation ,each instance has its own processes and all 
+   2. applicatiosn do not interfere 
+   3. os kernel manages cpu,memory,across all instances 
+   4. efficient since no guest os overhead 
+   5. kernel is responsibel to manage these instances 
+
+OS-level virtualization = efficient, lightweight isolation for applications, all running on the same OS kernel without a hypervisor.
+
+  //running multiple isolated apps on the same OS without needing a separate OS for each.that is the host os 
+  OS Virtualization allows multiple isolated environments (like mini-computers) to run on a single operating system kernel 
+  — without installing a separate OS for each.
+
+These environments are called containers or OS-level virtual machines.

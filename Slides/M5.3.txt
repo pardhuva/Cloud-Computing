@@ -1,0 +1,253 @@
+
+//Hadoop distributed file system 
+  The Hadoop Distributed File System (HDFS) is a
+    distributed file system designed to run on
+    commodity hardware.
+
+ why hadoop ?
+  Hadoop was created because traditional systems fail when dealing with Big Data.
+
+  1. Huge datasets → Traditional systems cannot handle
+     earlier data in MB,GB now TB,PB 
+     Regular databases (MySQL, SQL Server) cannot store or process this scale.
+     hadoop was built to 
+     store masssive data 
+     process massive data 
+     on commodity hardware 
+ 2. hadoop is fault tolerant it automatically creates replicas 
+ 3. clusters grow & shrink - not like old systems where the number of servers is fixed 
+    in hadoop : 
+        we can add machines anytime 
+        remove machines anytime 
+        this is horizontal scaling 
+ 4. applications shouldnt handle reliability 
+    before hadoop - every application had to write its own code to handle fault tolerance 
+    but with hadoop = fraework hadnles failure ,replication 
+ 5. hadoop is open-source, free, widely used ,runs on cheap hardware, supported by a large community 
+
+ Hadoop exists because traditional systems cannot store, process, or recover from failures when dealing with huge, fast-growing datasets.
+
+//assumptions 
+1. harware failure - quick recovery 
+2. streaming data access - data is read continously 
+3. large data sets 
+4. simple coherency model - needs a write once read many access model for fiels 
+5. moving computation is cheaper than moving data 
+    - computation is more efficient if it is executed near the data it operates on. hdfs provides interfaces for applications to move themselves closer to where data is located 
+6. portability across heterogeneous hardware and software platforms : hdfs has been designed to be easliy portable from one platform to another 
+
+
+//HDFS Architecture 
+   HDFS is a distributed file system that stores very large files by splitting them across many machines.
+   It is the storage layer of Hadoop.
+
+1. Namenode 
+  one namenode per cluster - to avodi confusion 
+  maintains hdfs namespace - folder files, hierarchy 
+  use inodes - contaisn file name,size,permissions 
+  in hdfs ,inode + metadata is stored in namenode memoyr 
+  when you upload ?
+    namespace decides which datanodes will store the blocks 
+  how read works ?
+   client ask for blocks of filename 
+   namenode replies with block locations 
+   client directly contacts datanodes to read data 
+   it does not send the data 
+
+   how write works ?
+    client asks namenode which datanode should it write to 
+    namenode returns a list of data ndoes 
+    Client writes the blocks to those DataNodes.
+   
+   checkpoint : fsimage+edit logs to keep memoyr small , restart faster 
+   NameNode stores the metadata in two files:
+    fsimage → snapshot of metadataedit
+     logs → recent changes
+
+ NameNode manages filesystem metadata and block locations, stores metadata in RAM, and coordinates all read/write operations.
+
+2. datanodes 
+ datandoe si a worker machien that stores the real data 
+  it stores actual hdfs blocks 
+so file is split into blocks then 
+these blocks are stored on different datanodes 
+datanodes store data 
+namenodes knows where it si stored 
+
+ datanodes sends heartbeats to namenodes to indicate it is alive 
+ datandoes also sends block reports 
+ read operation -> client reads data directly from datanode 
+ write operation -> client writes blocks directly to DataNodes.
+ NameNode only tells which DataNodes to use — it never stores user data.
+
+ handles replication even datanode fails it will replication from other copy 
+
+ DataNodes store blocks, send heartbeats, report block lists, handle replication, and directly serve data to clients.
+
+3. HDFS client 
+   it si the user/program that interacts with hdfs 
+   it is a software library  inside hadoop command line 
+   it knows how to talk to namenodes,datanodes 
+    
+    it can read a file via namenode and also write a file via namendoe 
+    it can also delete a file  delete directory , set replication factor , schedule tasks near data(data locality )
+    MapReduce/YARN tries to run computation on the DataNode where the block is stored.
+    This is called data locality.
+   
+   HDFS Client is a library that talks to NameNode for metadata and directly to DataNodes for reading/writing blocks.
+
+4. (image & journal )
+   image(fsimage) :
+     A snapshot of HDFS metadata.
+     Like a full backup of file system structure.
+     Not updated frequently.
+    journal (edits)
+     A log of every small change (create, delete, rename).
+     Updated on every operation.
+      Used to replay recent changes.
+    
+    image - old backup , journal - recent changes 
+    on restart - hadoop combines both 
+     bottleneck - writing eveyr change to journal -slow 
+     solution - batch many changes together 
+    
+5. checkpointNode :
+    it is seperate node (different machine) 
+    to create a fresh checkpoint to help naemode 
+    it downloads images & edits from namenode nad merges them and hten create new image , send to namenode 
+     it clears the old logs 
+
+     if journal becomes too large - namendoe restart becomes veyr slow so 
+     daily checkpoint keeps journal small, faster recovery 
+
+     CheckpointNode merges fsimage + edits to create a fresh checkpoint so NameNode restarts faster and journal doesn't grow too big.
+
+6. backup node 
+     BackupNode = a read-only NameNode that keeps an up-to-date image in memory and creates checkpoints faster than CheckpointNode.
+
+7. HDFS Upgrade -simple notes 
+  namenode :
+    Merges fsimage + edits in memory.
+    Creates a new checkpoint and new edits log in a new folder.
+    Tells DataNodes to make a local snapshot.
+  datanode : 
+     Makes a copy of its storage directory.
+     Uses hard links to point to existing block files (so no extra space).
+
+
+//HDFS Architecture 
+  HDFS uses master–slave architecture.
+  NameNode = master → manages metadata, namespace, and file operations (open/close/rename).
+  DataNodes = slaves → store actual data blocks.
+  files are split into blocks (default 64 MB) and stored on multiple DataNodes.
+  NameNode decides which block goes to which DataNode.
+  DataNodes handle read/write, and perform block creation, deletion, and replication when told by NameNode.
+  Works on top of existing file system.
+  Data is stored as blocks.
+  Reliability is achieved using replication.
+  NameNode stores all metadata.
+  No caching because files are typically very large.
+
+//failure adn recovery 
+ 1. datanode failure 
+  dn send sheartneats regularly to namenode so if deosnt send then namenode assume it is dead nad then check s the blocks on the datandoe nad replciate those missing on other alive datandoes 
+ 2. namenode : if this fails then entire file system stops because it has all the metadata  to handle this 
+ persistent backup : copy of namenodes metadata(fsimage +edits) is saved on to disk 
+ checkpointing : merged copy is created helps restore the nn quickly after failure 
+
+//replication policy 
+ rule 1: single DataNode cannot store two copies of the same block.
+   -> This protects data if that DataNode fails
+ rule 2: A single rack cannot have more than two replicas of the same block (if enough racks exist).
+   -> → This protects data even if a whole rack goes down.
+
+
+//introduction to MapReduce
+  Why MapReduce?
+
+• Traditional Enterprise Systems normally have a centralized
+server to store and process data.
+•  the centralized system creates too much of a
+bottleneck while processing multiple files simultaneously.
+
+• Google solved this bottleneck issue using an algorithm called
+MapReduce.
+• MapReduce divides a task into small parts and assigns them to
+many computers.
+• Later, the results are collected at one place and integrated to
+form the result dataset.
+
+How MapReduce Works?
+
+• MapReduce is a software framework to process large datasets across multiple machines. 
+Map data into multiple <key, value> pairs –
+ Reduce over all pairs with the same key.
+• Consider a simple example of finding the count of every word
+present in a document.
+
+Word Count using MapReduce
+ input -> splitting -> mapping-> shuffling -> reducing -> final result 
+
+
+
+ HDFS Basics
+
+HDFS uses master/slave architecture.
+NameNode = master, DataNodes = slaves.
+Files are stored as blocks (default 64 MB).
+HDFS provides fault tolerance and high throughput.
+HDFS runs on commodity hardware.
+HDFS works on write-once, read-many model.
+Computation moves to data, not the other way.
+HDFS avoids caching because files are very large.
+
+NameNode
+Stores metadata (file names, block locations).
+Keeps namespace in memory for fast access.
+Only one NameNode per cluster.
+Performs open, close, rename operations.
+Uses checkpoint + journal for persistence.
+
+DataNode
+Stores actual data blocks.
+Sends heartbeats every 3 seconds.
+Sends block reports (block ID, size, generation).
+Replication, deletion, creation done on NN instruction.
+If heartbeat missing for 10 mins → DataNode is dead.
+
+CheckpointNode
+Downloads checkpoint + journal
+Merges them
+Creates a new checkpoint
+Helps reduce NameNode restart time
+
+BackupNode
+Maintains in-memory updated image.
+Can create checkpoint without downloading.
+
+Failure & Recovery
+NN tracks DN via heartbeats.
+If DN fails → lost blocks are replicated elsewhere.
+NN failure = file system failure.
+Recovery options: backup + checkpointing.
+
+Replication Policy
+Rule 1: One DN cannot store more than one replica.
+Rule 2: One rack cannot store more than two replicas.
+
+Why Hadoop?
+Needed for large datasets.
+Hardware failures are common.
+Must be efficient, reliable, open-source.
+
+Why MapReduce?
+Centralized systems = bottleneck.
+Google solved using MapReduce.
+Divides tasks → runs in parallel → combines results.
+
+MapReduce Working
+Map: converts data to (key, value) pairs.
+Reduce: groups by key and aggregates values.
+
+When NameNode writes metadata changes to the journal, it must flush (write to disk) and sync (force it to stable storage).
+ 

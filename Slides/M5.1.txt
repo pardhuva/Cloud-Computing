@@ -1,0 +1,104 @@
+
+//Introduction to big data 
+  
+// Data vs information 
+  What is Data? (Simple Meaning)
+    Raw facts. Unprocessed. No meaning yet.
+     ex: temperature , images ,videos , tweets, sensor readings 
+  Data alone doesn’t tell you anything useful.
+  
+   What is Information?
+    Processed, organized, analyzed data that gives meaning.
+    Information = data with context + insight.
+    ex: temperature is raising after analyzing 100 years of data 
+
+    Example 1
+    Data: 100 years of temperature readings
+    Information: Earth’s temperature is rising 
+
+    //Data is raw facts; Information is processed data that gives meaning.
+
+//types fo data 
+ (Structured, Unstructured, Semi-structured)
+
+ 1. Structured Data
+   Has a fixed schema , Organized in rows & columns, Easily stored in RDBMS (SQL), Easy to search, update, analyze
+   very clean , organizedm predictable structure 
+   ex: student table, employee table , bank transactions 
+ 
+ 2. Unstructured Data
+   no fixed format, cannot fit into rows/cols, hard to analyze , requires specific tools (hadoop,spark)
+   ex: images,videos,audio,pdfs,emails 
+   This is where most modern data comes from.
+
+ 3. Semi-structured Data
+    not fully structures, Not fully unstructured, Has SOME organization, but no strict schema, Can be parsed easily (tags, keys)
+    ex: xml,json,html,emails 
+    has structure but not like sqls tables
+
+    | Type                | Schema  | Examples               |
+| ------------------- | ------- | ---------------------- |
+| **Structured**      | Fixed   | SQL tables, CSV        |
+| **Unstructured**    | None    | Images, videos, tweets |
+| **Semi-structured** | Partial | XML, JSON, HTML        |
+
+
+//why instructured  data si raising so fast 
+ social media, mobile phones , sensors/iot, scientific devices 
+
+//big data 
+Big Data comes from social media, sensors, mobiles, scientific instruments, and everything connected to the internet.
+
+ because of 
+  huge volume 
+  huge velocity 
+  huge variety 
+  old tools cannot handle so we need hadoop,nosql,spark 
+   Big Data = data so big and complex that old systems cannot store or process it.
+   Big Data = Data that is too large, too fast, and too complex for traditional systems to handle.
+
+//3 V's of Big Data 
+ 1. volume - how much data 
+    . amount of data generated 
+    . online and offline transactions 
+    . in kilobytes or terabytes 
+    . cannot fit in normal storage needs distributed sytems 
+    ex: insta photos,youtube videos 
+    more data = more storage + more computing power 
+  
+ 2. Variety - different types of data 
+    earlier - only structured 
+    now : mixed formats 
+    types :
+        Structured: tables
+        Unstructured: images, videos, tweets
+        Semi-structured: JSON, XML
+    ex: text,images,logs 
+    All these types must be linked together to extract real knowledge.
+
+  3. Velocity - how fast data is coming 
+     data now arrives - eveyr sec, millisec, nanosec 
+    . speed of generating data 
+    . generated in real time 
+    . online and offline data 
+    . in streams,batch or bits 
+   ex: online transactiosn, sensor streaming , live locatio n updates 
+   Fast data requires fast processing (real-time analytics).
+
+  | V            | Meaning              | Example                            |
+| ------------ | -------------------- | ---------------------------------- |
+| **Volume**   | Big size             | TBs of images, social media data   |
+| **Variety**  | Different types      | Text, video, audio, JSON           |
+| **Velocity** | Speed of data coming | Real-time sensors, fraud detection |
+
+
+//the 7v's of big data 
+ | V                 | Meaning        | Example                       |
+| ----------------- | -------------- | ----------------------------- |
+| **Volume**        | Size           | TBs of Instagram videos       |
+| **Variety**       | Types          | Text, image, audio, JSON      |
+| **Velocity**      | Speed          | Real-time fraud detection     |
+| **Veracity**      | Trust          | Clean vs noisy data           |
+| **Value**         | Usefulness     | Data that gives insights      |
+| **Variability**   | Inconsistency  | Traffic spikes, social trends |
+| **Visualization** | Representation | Dashboards, charts            |

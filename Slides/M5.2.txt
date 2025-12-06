@@ -1,0 +1,50 @@
+//the rise of Nosql 
+ NoSQL = Not Only SQL
+ It does NOT replace SQL — it is an alternative for data that does not fit into relational tables.
+
+ why needed ?
+  modern data is big, unstructures,fast,distributed, changes constatnly 
+
+sql has fixed schema,tables,joins 
+but todays data is json,videos,documents,logs,sensor data 
+these does nto fit into tables - hence nosql 
+
+nosql features 
+1. schema agnostic 
+   no fixed structure 
+   data shape cna change anytime 
+2. Non-relational
+   Not based on tables, rows, columns.
+3. Highly distributable
+   NoSQL databases run on clusters of machines, scale horizontally.
+
+//four core types of nosql 
+ 1. column databases 
+    Still has rows & columns but sores by colums not by rows 
+    column because very fast for analytics,aggregation 
+    good for data warehousing,finding patterns in large datasets 
+    ex: cassandra, hbase 
+ 2. key-value stores 
+     Simplest NoSQL form
+    data is stored like key → value
+     very fast reads/writes,great for caching, works well for sessions,tokens 
+     ex: redis,dynamodb 
+ 3. triple stores (graph)
+    Every fact = Subject, Predicate, Object
+     ex: Adam → Likes → Cheese,
+    used for knowledge graphs, social networks ,recommendation systems 
+    becuse these relational cannot store relationships,networks, connections,social grpahs 
+    ex: graphdb 
+ 4. Document stores 
+     Stores entire documents (JSON, XML, PDF)
+     Each document is a complete unit of information.
+     used for flexible data,changing structure, storing app data , apis 
+     ex: mongodb, couchdb  in e-commerce,user profiles ,social media posts 
+    
+    | Type             | Best For              | Example          |
+| ---------------- | --------------------- | ---------------- |
+| **Columnar**     | Analytics, aggregates | Cassandra, HBase |
+| **Key–Value**    | Speed, caching        | Redis, DynamoDB  |
+| **Triple/Graph** | Relationships         | Neo4j, GraphDB   |
+| **Document**     | JSON, flexible data   | MongoDB, CouchDB |
+

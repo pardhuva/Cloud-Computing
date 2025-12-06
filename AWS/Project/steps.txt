@@ -1,0 +1,68 @@
+1. check if nodejs is installed 
+     node -v
+    npm -v
+
+2.  install amplify cli 
+     npm install -g @aws-amplify/cli
+   check: amplify -v
+
+3. configure here you are connecting local machien (vs code ) to your aws account 
+   command:  amplify configure   (here browser opens to connect)
+
+   here you create a iam user and access key and password and give here to conenct your local to your aws account 
+
+4. aws sts get-caller-identity
+   to check if configuring is done successfully 
+
+5. create role and attach permissions 
+   When you create the Lambda function, AWS asks for a role ARN.
+
+6. basic react app setup and install amplify 
+    npx create-react-app notes-app
+    npm install aws-amplify @aws-amplify/ui-react
+
+7. configure cognito for authentication 
+   - creating user pool in cognito 
+   - add email 
+   Cognito app is ready.
+
+Now we’ll connect your React frontend to Cognito so users can log in and get a JWT token.
+8. Connect React Frontend with Cognito
+    AWS Amplify should be installed before 
+
+9. DynamoDB table ✅
+  Create the table first (Notes)
+  Partition key: id (Number)
+  Optional attributes: userId (String), text (String)
+
+10. create Lambda function backend ✅
+  Create Blue version Lambda (notes-blue)
+  IAM role with DynamoDB read/write permissions
+  Node.js code reads/writes from Notes table
+
+11. API Gateway ✅
+  Create HTTP API → integrate with your Lambda
+
+Route /notes
+
+Enable JWT Authorizer → Cognito user pool
+
+Cognito user pool ✅
+
+Users can log in → get JWT token
+
+React frontend ✅
+
+Use AWS Amplify or Cognito SDK
+
+Login / signup → get JWT
+
+Call API Gateway endpoint with Authorization header
+
+Blue-Green deployment
+
+Create Green Lambda (notes-green)
+
+Change note text or minor logic
+
+Create alias / stage in API Gateway → shift traffic from Blue → Green

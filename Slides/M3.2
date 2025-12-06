@@ -1,0 +1,238 @@
+
+//application level virtualisation 
+    Virtualizes only a single application, not the full operating system or hardware.
+    The application runs as if it’s installed on the native system, even if the underlying OS or environment is different.
+
+    how it works 
+     Only the app’s environment is virtualized (libraries, runtime dependencies).
+     The rest of the OS and hardware are used normally.
+     App runs independently of the local desktop.
+     No need to actually install the app in the host system.
+     Application can run on an OS that does not natively support it.
+
+  emulation :   lets a program compiled for one hardware architecture run on a completely different hardware architecture.
+  techniques 
+  1. interpretation 
+     Each instruction from the original program is interpreted one by one.
+     minimal cost but very slow 
+  2. binary transaltion 
+       Original instructions are translated into native instructions.
+       Translated blocks are cached and reused, so repeated execution is fast.
+    
+  Emulation = only executes a program compiled for a different hardware.
+  Hardware virtualization = emulates full hardware environment, so an entire OS can run.
+ 
+ Application virtualization allows you to run an app on a system 
+ without actually installing it on that system — and without worrying about OS compatibility or missing libraries.
+
+//problems with storage 
+1.physical cosntraints 
+2.low utilization 
+3.high cost 
+4.multiple manageemtn systems 
+
+//storage virtualisation 
+   Storage virtualization is a technique that decouples the physical storage hardware from its logical representation.
+   Users see a single logical storage system, while the data may reside across multiple physical devices.
+
+   how it works 
+   1.logical view :
+         Users access storage using a logical path, not worrying about where the data physically resides.
+   2. pooling combines multiple storage devices into a single virtual storage pool 
+   3. single interface to manage storage 
+   4. Network-Based Virtualization: Storage Area Networks (SANs) provide centralized, network-accessible storage over high-speed connections.
+   
+   Think of storage like a library system:
+        Physical books are scattered in multiple branches (physical storage).
+        Virtualization = a single online catalog (logical view) where users don’t need to know which branch holds the book.
+
+ Storage virtualization = hide physical complexity, provide a single logical storage system, and simplify management while improving utilization.
+  Storage virtualization hides the actual physical storage (hard drives, SSDs, etc.)
+  and gives you a single, logical view of all your storage — no need to care where data is really stored.
+
+
+//memory virtualisation 
+   Memory virtualization allows guest OSes and their apps to use memory without knowing the actual physical memory layout.
+   It introduces an extra layer of address translation so multiple VMs can share the same physical RAM safely.
+
+   virtual to physical address mapping 
+   virtual address (guest app) -> physical address(guest os) ->machine address(actual hardware)
+   
+   guest page table: virtual addresses to physical addresses 
+   hypervisor table : physical addresses -> machine address 
+
+//guest os updates its page tables without hypervisor knowing so we manintain 
+  shadow page table by hyperviosr mark guest page table as read only 
+  if guest ries to write -> exception is trapped 
+
+    Guest page table:       VA → PA
+  Hypervisor mapping:      PA → MA
+  --------------------------------------
+  Shadow page table:       VA → MA  (single table for MMU)
+
+
+/page faults in virtualized memory 
+    1.true miss -> mapping does not exist in guest page table -> forward page fault to guest os 
+    2. hidden miss -> mapping exists in guest page table but missing in shadow  table -> hypervisor silently updates shadow table 
+
+//shadow page tables 
+    pros -> guest os code can execute directly on cpu suign VA ->MA mapping 
+    but requires double memory usage(guest table + shadow table ),overhead from hypervisor traps 
+
+
+//to reduce overhead 
+    second level address translation (SLAT) 
+    intel : extended page tables (EPT),AMD : nested page tables(NPT)
+    into one multilevel table -> reduces hypervisor overhead 
+    uses improved TLBs to speed up address translation 
+    tagged TLB  is better ,tlb is modified to reduce miss rate 
+    large tlb- more expensive , tagged tlb - every entry in tlb has an address space identifier 
+
+summary 
+    Memory virtualization = VA → PA → MA mapping.
+    Shadow page tables allow direct translation but add overhead. (VA ->MA)
+    SLAT (EPT/NPT) reduces overhead by combining page tables in hardware.
+
+  Memory virtualization makes each program think it has its own private memory,
+    even though it’s actually sharing the physical RAM with other programs or virtual machines.
+
+
+//network virtualisation 
+   Creating virtual versions of physical network components like switches, routers, and interfaces, so that:
+     Multiple networks can be combined into one logical network.
+     one physical network can be split into many virtual ones.
+  
+     It uses software + hardware to manage virtual networks that behave like real ones.
+     types :
+    1. external network virtualization 
+       Combines multiple physical networks into one logical network.
+       Used to group computers together virtually.
+       ex: use vlans to connect multiple devices into same logical 
+    2. internal network virtualisation 
+       Used inside a physical server, often with VMs or containers.
+       Each VM or container gets a virtual network interface.
+
+ network virtualization puts your network into software —
+ so you can manage, divide, and control it easily without changing cables or hardware.
+
+//desktop virtualisation 
+The desktop environment (your personal computer screen, apps, files, etc.) is not running on your physical device.
+Instead, it is hosted on a remote server or data center.
+You just connect to it from anywhere using a thin client, web browser, or remote desktop software.
+
+Instead of carrying your laptop around, you log in to your desktop remotely — and it looks and works exactly like your own personal computer.
+
+types of desktop virtualisation 
+
+| Type                                     | Description                                                                                    |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **VDI (Virtual Desktop Infrastructure)** | Each user gets their own **virtual machine** with their own desktop OS. High customization.    |
+| **RDS (Remote Desktop Services)**        | Users **share a single Windows server** with multiple sessions. Less isolated.                 |
+| **DaaS (Desktop as a Service)**          | VDI hosted on **cloud providers** like AWS WorkSpaces, Azure Virtual Desktop. Managed for you. |
+
+
+//live migration adn server consolidation 
+  Live Migration is the process of moving a running virtual machine (VM) 
+  from one physical server to another without shutting it down, so that the services continue uninterrupted.
+
+  how it works 
+  1. hypervisor copies vm memory adn cpu state to the destination server while teh vm keeps running 
+  2. Synchronizes changes made during the copying.
+  3. Switches execution to the new server.
+  4. Old server stops running the VM.
+
+  benefits 
+  .reduce downtime 
+  balance load across servers 
+  high availability 
+  fautl tolerance 
+
+  //server consolidation 
+    Server Consolidation is the practice of combining workloads from multiple underutilized servers onto fewer, more powerful servers using virtualization.
+    By moving multiple VMs onto fewer servers, you save space, energy, and management costs.
+
+    how it works 
+    1.identify underutilized servers 
+    2. create vms for their workloads 
+    3. move vms onto fewer physical servers 
+    4. turn off old servers 
+
+Live Migration is often used during server consolidation to move VMs safely from old or low-utilization servers to consolidated servers without downtime.
+
+1.precopy migration 
+    Pre-Copy moves the VM memory pages to the destination server before stopping the VM, while the VM keeps running on the source.
+
+    how it works 
+    .copy memory pages from source to destination while vm is running 
+    . track modiefied pages(dirty pages) during copying 
+    . repeat copying dirty pages until only a small number remain 
+    . stop the vm ,copy the last few pages then resume vm from destination 
+
+    very low downtime 
+2.Postcopy migration 
+    Post-Copy starts the VM on the destination immediately and fetches memory pages from the source as needed.
+
+    how it works 
+    . stop the vm at the source 
+    . start the vm on destination immediately 
+    . fetch memory pages on demand from source 
+    . remaining pages are sent in backgroudn 
+
+    slowdowns -> while rendering the pages 
+
+//xen hypervisor 
+   Xen is an open-source type-1 (bare-metal) hypervisor that allows multiple operating systems (guests) 
+    to run on the same physical hardware simultaneously.
+ Type-1 hypervisor → runs directly on hardware, not on top of another OS.
+ Designed for high performance and isolation.
+ 
+  Type: Open-source virtualization platform based on paravirtualization.
+  Guest OS interacts with hypervisor via paravirtualization, meaning the OS is aware it's running on a virtualized environment.
+
+//VMWARE  sgx server 
+server virtualisation 
+
+1. serverd (daemon process)
+   It is a background process.
+   Controls and manages all VMware application processes.
+   Acts like the central controller.
+2. VMware driver
+  Installed on the host OS.
+  Connects VMware applications to actual virtual machines.
+  Works like a bridge between the VMware apps and the VM hardware.
+3. VMM (Virtual Machine Monitor)
+   Manages each virtual machine instance.
+   Basically runs the virtual machine.
+4. User requests
+   Users send VM create/start/stop requests through a Web server.
+   These requests go to serverd.
+    serverd forwards them to the VMM.
+    VMM performs the required VM operations.
+
+serverd controls VMware apps → VMware driver links apps to VMs → VMM manages VMs → user requests go from Web server → serverd → VMM.
+
+VMkernel is the core OS that handles scheduling ,file systems , memory , cpu 
+cim broker - remote management  - esxi management 
+vfabric - application development 
+dcui - local bios like management 
+vcenter - centralized management 
+vcloud - extend into cloud services 
+zimbra - email,messaging , calendra 
+
+VMware offers complete end-to-end virtualization — from desktop machines to entire cloud datacenters — using tools like ESXi, vSphere, vCenter, vCloud, and Zimbra.
+
+| **Type of Virtualization**            | **Definition (Simple)**                                                                    | **Examples**                           |
+| ------------------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------- |
+| **1. Application Virtualization**     | Virtualizes only the application; runs as if installed locally even when it’s not.         | Wine, VMware ThinApp, Microsoft App-V  |
+| **2. OS-Level Virtualization**        | Multiple isolated containers share the same OS kernel.                                     | Docker, LXC, OpenVZ                    |
+| **3. Hardware / Full Virtualization** | Entire hardware is emulated so unmodified OS can run as a VM.                              | VMware ESXi, VirtualBox, Hyper-V, KVM  |
+| **4. Paravirtualization**             | Guest OS is modified to interact with hypervisor for faster performance.                   | Xen (PV mode)                          |
+| **5. Storage Virtualization**         | Combines many physical disks into one logical storage system.                              | SAN, RAID, vSAN                        |
+| **6. Memory Virtualization**          | Virtual memory abstraction allowing VMs to have their own memory; uses SLAT/shadow paging. | Shadow Page Tables, Intel EPT, AMD NPT |
+| **7. Network Virtualization**         | Creates virtual networks independent of physical hardware (VLANs, virtual NICs).           | VLAN, Virtual Switch, NAT              |
+| **8. Desktop Virtualization**         | Desktop environment runs on a remote server; accessed from anywhere.                       | VDI, RDS, DaaS                         |
+| **9. Server Virtualization**          | One physical server is divided into multiple virtual servers.                              | VMware ESXi, XenServer, Hyper-V        |
+| **10. Data Virtualization**           | Combines data from multiple sources and shows it as a single view.                         | Denodo, Tibco Data Virtualization      |
+| **11. GPU Virtualization**            | Shares a single physical GPU across multiple VMs/containers.                               | NVIDIA vGPU, AMD MxGPU                 |
+| **12. Application Containerization**  | Packages apps + dependencies in isolated containers.                                       | Docker, Kubernetes Pods                |
+

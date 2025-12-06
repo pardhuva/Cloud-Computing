@@ -1,0 +1,189 @@
+
+what is computing ?
+computing means to the process of using a computer ( hardware + software) to perform calculations,process information, or execute instructions to solve problems 
+
+//goals of efficient computing 
+ 1. less execution time /more speedup : tasks finish faster.->measured by speedup in parallel or optimized systems 
+ 2. More efficiency - it is related to using resources (cpu,memory) wisely. high efficiency means system isnt wasting resources 
+ 3. less cost - indirectly, becasue efficient computing require fewer reources ,reducing cost 
+ 4. handling large data : as modern computing focuses on scalability, like big data processing.efficient computing enables handles massive datasts 
+ 5. Less errors : good - algos, error-checking , validation produces fewer mistakes 
+ 6. less size 
+ 7. more computationsal capacity 
+
+ In short: Computing is performing tasks using a computer, and the benefits you mentioned are outcomes of efficient and effective computing, not computing itself.
+
+
+// Evolution of commercial computing 
+
+  1. Centralized Era :
+     . Large and expensive computers 
+     . only some organisations keep them with their own centralized servers 
+     .personal computers came into picture 
+    Everything was controlled in one place (centralized) and computers were big and costly 
+
+  2. Decentralized Era :
+      . Public data centers (Companies could use servers in other locations instead of maintaining their own )
+      . Public Cloud computing (compute resources and storage available on the internet, pay -as you go model)
+      . service-oriented architectture :(applications became modular adn could run on multiple systems)
+    Computing power moved away from being fully centralized—users could access resources online anytime, anywhere.
+
+  3. Distributed(current) Era:
+      . Distributed Computing: Systems spread across multiple locations, working together.
+      . Artificial Intelligence (AI): Uses distributed computing for processing large datasets.
+      . Blockchain: Decentralized, secure, and distributed ledgers.
+    Computing is now not just on one machine or location—it’s spread out across networks and can scale dynamically.
+
+  Centralized → Decentralized → Distributed
+  Computers became smaller, faster, more accessible, and smarter.
+  From expensive and rare → to ubiquitous, cloud-based, and AI-powered.
+
+
+    | Feature                    | **Centralized Computing**                                            | **Decentralized Computing**                             | **Distributed Computing**                                        |
+    | -------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------- |
+    | **Definition**             | All computing is done on a **single central system**                 | Multiple **independent nodes**, no single control point | Multiple **connected systems working together** on a common task |
+    | **Control**                | Full control in one place                                            | No single point of control                              | Shared control but coordinated task execution                    |
+    | **Failure Impact**         | **Single point of failure** – system goes down if central node fails | **Somewhat fault tolerant** – others may still work     | **High fault tolerance** – other nodes take over if one fails    |
+    | **Example Technologies**   | Mainframes, old servers, early PCs                                   | Blockchain, Peer-to-peer (P2P), Public cloud interfaces | Hadoop, Spark, Google Search, distributed databases              |
+    | **Scalability**            | Hard to scale (limited by single machine)                            | Moderate (add independent nodes)                        | Highly scalable (add machines to the cluster)                    |
+    | **Performance Bottleneck** | Yes – central server can get overloaded                              | Less likely – load is distributed                       | No – designed for parallelism                                    |
+    | **Ownership/Control**      | Single owner / organization                                          | May be multiple independent owners                      | Usually single organization (but multiple machines)              |
+    | **Use Case Example**       | Old bank systems, early hospital systems                             | Blockchain voting, public clouds                        | Big data processing, search engines, Netflix backend             |
+    | **Diagram Analogy**        | 🧠 One big brain                                                     | 🧠 🧠 🧠 Multiple brains, each acting alone             | 🧠🧠🧠 Multiple brains working **together**                      |
+
+   In early decentralized/cloud computing, the main challenges were network unreliability, lack of tools, security concerns, high cost, and architectural immaturity.
+   these make it hard to connect nodes and use them together 
+
+
+//Types of computing environments 
+ computing environment where many computers are used to process and exchnage information to handle multiple issues 
+ 1. personal computing environment 
+ 2. Time sharing c.e
+ 3. Cluster c.e
+ 4. Cloud c.e 
+ 5. Distributed c.e 
+ 6. Client-server c.e
+
+1. personal c.e :
+   . there is a single computer system.
+   . all the system processes are available on the computer and executed there 
+   . Smaller size machines – semiconductor technology.
+   . Every system now had dedicated computing power, memory and storage – available locally.
+   . for personal use 
+   . size of pcs has reduced with an increase computational power and storage capacity 
+
+2. Time sharing c.e 
+   . The time sharing computing environment allows multiple users to share the system simultaneously.
+   . Each user is provided a time slice and the processor switches rapidly among the users according to it.
+   . Because of this, each user believes that they are the only ones using the system.
+
+3. Networked Computing :
+    . this is used for better communication between systems , resource sharing 
+    . systems are interconnected to form (LANs) local networks which these all evolved to form ARPANET which is evolved as internet 
+    . ARPANET -> distributed control -> TCP/IP protocols 
+
+4. Client Server computing 
+    . In client server computing, the client requests a resource and the server provides that resource.
+    . A server may serve multiple clients at the same time while a client is in contact with only one server.
+    . Both the client and server usually communicate via a computer network but sometimes they may reside in the same system.
+    
+5. Distributed computing 
+    . multiple devices (nodes) that are physically seperat ebut linked together using the network 
+    . All the nodes in this system communicate with each other and handle processes in tandem.
+    . It uses a centralized resource manager and all node cooperatively work together as a single unified resource
+    . Distributed system architectures are bundled up with components and connectors.
+    . Components can be individual nodes or important components in the architecture whereas connectors are the ones that connect each of these components.
+    . Component: A modular unit with well-defined interfaces; replaceable; reusable.
+6. Grid computing :
+    . large number of connected nodes which act like a single entity (they are logically connected in a grid-like network) so each other can share to other and do together 
+    . Users do not know which node serves their requests.
+    . multiple physically seperated systems share data and resources for performing a common task.
+    . original task is split adn distributed among different systems 
+    . requires special software to be installed (middleware)
+    . the middleware is that helps for systems for communication,resource sharing , handles task distribution 
+
+//based on the task the developers use middleware 
+
+    | **Scenario**                                  | **Best Architecture**                  | **Why?**                                                     |
+  | --------------------------------------------- | -------------------------------------- | ------------------------------------------------------------ |
+  | ✅ **Small tasks** with few nodes              | **Centralized**                        | Easy to manage, simple scheduler (like a master-slave model) |
+  | 🔐 **Private/secure data or internal jobs**   | **Centralized or Hybrid**              | Easier to control access, enforce security policies          |
+  | 🔁 **Highly dynamic or large-scale systems**  | **Decentralized**                      | Better scalability, no single point of failure               |
+  | 📶 **Low communication between subtasks**     | **Decentralized**                      | Can distribute tasks independently across nodes              |
+  | 📡 **High coordination needed**               | **Centralized or Distributed**         | Better control & synchronization                             |
+  | 💥 **Fault tolerance is critical**            | **Decentralized**                      | If one node fails, others take over — no master bottleneck   |
+  | 🌍 **Heterogeneous, globally spread systems** | **Grid with Decentralized Middleware** | Handles diverse platforms and locations well                 |
+
+  Middleware doesn’t always automatically choose the architecture — instead, we choose the middleware that best suits our task.
+  We don’t choose the architecture based on the middleware.
+  Instead, we choose the middleware based on which architecture it supports — and that matches our task needs.
+
+//as we know there can be different computing environments based on teh size,privacy,needs,task type,fault tolerance scalability 
+   So, we analyze the environment, then choose the best-fitting architecture, and finally pick middleware that works well with that architecture.
+
+  | **Computing Environment**                          | **Best Architecture**           | **Why?**                                               |
+  | -------------------------------------------------- | ------------------------------- | ------------------------------------------------------ |
+  | Small in-house compute cluster (e.g., lab servers) | **Centralized**                 | Easy to manage, fewer nodes, private & secure          |
+  | Public volunteer computing (e.g., SETI\@home)      | **Decentralized**               | Thousands of unknown contributors, needs scalability   |
+  | Scientific collaboration across universities       | **Distributed** or **Hybrid**   | Multiple control points, data-sharing, fault tolerance |
+  | Cloud-hosted system with auto-scaling              | **Hybrid** or **Decentralized** | Dynamic resource allocation, elasticity                |
+  | Real-time financial systems                        | **Centralized or Distributed**  | Needs tight control and fast failure handling          |
+
+| **If you need…**              | **Use…**          |
+| ----------------------------- | ----------------- |
+| Simplicity + control          | **Centralized**   | (Single data center, simple workloads.)
+| Performance + parallelism     | **Distributed**   |(Scientific computing, cloud backends.)
+| Scalability + fault tolerance | **Decentralized** | (Blockchain, P2P, volunteer computing.)
+| Collaboration + heterogeneity | **Grid**          | (CERN, NASA grids.)
+
+
+//Distributed vs Grid 
+
+  | **Distributed Computing** | Many computers working together to do a job.                                                                                       |
+  | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+  | **Grid Computing**        | A **special kind** of distributed computing where **different organizations or locations** share their computers to work together. |
+
+  that the workload is distributed, but the control might or might not be distributed — it is one kind of distributed. (google)
+    Whereas in grid, both workload and control are distributed, which is a type of distributed."
+
+
+//Teragrid
+  TeraGrid was a U.S. government-funded grid computing project that allowed researchers to use a nationwide network of supercomputers as one powerful system, connected through middleware, high-speed networks, and shared tools.
+
+//advantages of grid computing 
+    1. Improved Resource Utilization:
+        . idle computers or underused servers in different locations can be used efficiently.
+        . Grid computing allows multiple organizations to share unused CPU, memory, or storage. so nothing goes waste 
+    2. General Performance Increase – Parallel Processing :
+        . A big task is broken into smaller tasks and run in parallel on multiple machines.
+    3. Easier Collaboration :
+        . Scientists and teams from different places can work on the same project using shared resources.
+        . All teams access the same data, software tools, and computing power via the grid.
+    4. Increased Robustness :
+       . The system is more reliable and less likely to fail completely, because it's distributed.
+       . i fone node fails the taks is reassigned to another point 
+       . no single point of failure (fault talerant)
+  
+
+
+  //summary 
+    Computing is the use of computers and machines to process, store, and manage data to solve problems and perform tasks efficiently. 
+    Its main goals are to increase efficiency, reduce human effort through automation, ensure accuracy, handle growing amounts of data (scalability), and enable connectivity and sharing of resources.
+     Computing has evolved over time from manual methods like the abacus, to mechanical devices like Babbage’s engine, then to electronic computers, networked systems, cloud and grid computing, and now advanced AI and quantum computing.
+      Based on architecture and use, computing can be centralized (one main computer), distributed (tasks shared among multiple computers), grid computing (resources shared across organizations), cloud computing (internet-based services), parallel computing (many processors working simultaneously), edge computing (processing near data sources), and quantum computing (using qubits for complex problem-solving).
+
+
+
+
+      | **Feature**             | **Distributed Computing**                                   | **Grid Computing**                                                                     |
+| ----------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **Definition**          | Multiple computers working together as a single system.     | A distributed system where resources from many independent organizations are combined. |
+| **Ownership**           | Usually one organization owns and manages all nodes.        | Resources belong to different organizations, institutions, labs, etc.                  |
+| **Coupling**            | **Tightly coupled** (close coordination).                   | **Loosely coupled** (independent systems collaborating).                               |
+| **Resource Sharing**    | Shared within one controlled environment.                   | Shared across multiple administrative domains.                                         |
+| **Heterogeneity**       | Less heterogeneous; similar hardware & OS.                  | Highly heterogeneous; different OS, hardware, policies.                                |
+| **Scalability**         | Limited to one organization’s infrastructure.               | Extremely scalable—can span global resources.                                          |
+| **Reliability**         | More reliable because the environment is controlled.        | Less predictable; depends on different external systems.                               |
+| **Communication Speed** | Usually high-speed LAN within a data center.                | Often WAN; slower, geographically distributed.                                         |
+| **Use Cases**           | Web apps, microservices, enterprise systems, cloud backend. | Large scientific computations, climate simulations, physics research.                  |
+| **Examples**            | Hadoop cluster, Google backend, distributed DBMS.           | CERN LHC grid, NASA IPG, TeraGrid.                                                     |

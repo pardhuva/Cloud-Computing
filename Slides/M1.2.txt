@@ -1,0 +1,90 @@
+
+//Grid and Utility Computing 
+
+ Grid Computing 
+  as we know its a practice of multple nodes distributed but connected by networks to work together to accomplish joint tasks
+   it runs on a data grid -> A data grid is basically a pooled and distributed storage system, where multiple computers work together to store, access, and manage data efficiently across locations.
+
+//how does grid computing works
+  1. specialized software on every node :
+      as all nodes are connected to run the task by dividing so make sure every computer in grid rusn the same middleware/software 
+      thsi acts like the manager of the grid,coordinating all tasks 
+  2. Task division :
+     bigger taks is split into smaller subtasks
+     each node gets a subtask to wrok on simultaneously
+  3. Communication and coordination :
+     software ensures  nodes communicated about what they are doing 
+     it keeps track of progress,shares intermediate data 
+  4. Aggregation of results :
+     once the subtasks are completed the outputs are collected and combined 
+     this forms the final result of the larger task 
+
+   //The same software runs on all nodes, and it handles task division, management, communication, and aggregation — so the grid works as one coordinated system even though nodes are distributed.
+
+//in grid computing each nodes can work individually in adistributed network either they can share resources  or wihout sharing the reources 
+   as they can work on different things wihtout sharing the resources btu the grid combines theri results to complete the overall task 
+
+//data grid
+  it  is a system where data is shared across multiple nodes.
+  All nodes can access, process, and sometimes store parts or all of the data.
+  Middleware/software ensures that data is coordinated, consistent, and accessible to the nodes when needed.
+
+//Inmemory data grid 
+    While grid computing is often used for large-scale distributed projects, it can also be applied locally within a single organization. 
+    For example, a company can set up a cluster of connected computers that work together on a task — this is a form of local grid computing.
+    
+    A special type of local grid is the In-Memory Data Grid (IMDG). In an IMDG, all the connected computers store the data in their memory and work together using coordination software.
+     Because the data is kept in memory on all nodes, access is extremely fast, making IMDGs ideal for tasks that require very high speed (throughput) and low delay (latency).
+   
+   . Local Grid = small-scale grid within one organization
+   . IMDG = data stored in memory across all nodes → very fast access
+   . Coordination software ensures nodes work together and stay synchronized
+   . Best for tasks needing high speed and low latency
+   . Local grid computing, especially with IMDGs, connects a cluster of computers to share in-memory data and work together efficiently, giving fast access and high-speed processing for demanding tasks.
+
+    Local Grid: Data may be fully replicated (all nodes have all data).
+    Global Grid: Data is distributed (each node has part of the data).
+
+    Local grids sacrifice  memory for speed (IMDG).
+    Global grids sacrifice  speed for scalability (distributed data storage).
+
+   . high throughput - The number of tasks or instructions completed per unit of time.
+                        More computations are done per second.(as many nodes are working together)
+   . low latency -  The time delay between requesting data and receiving it.
+                    Short waiting time to access data for computation.(as data is stored in memory of all nodes)
+
+
+//Types of grids 
+ 1. Computational grids : 
+     A computational grid is a network of high-performance computers (servers) connected to work together to solve large-scale computational problems.
+     Designed for heavy computational tasks like simulations, scientific calculations, or complex modeling.
+     Each server contributes its processing power to the grid.
+    ex: Weather forecasting models using multiple supercomputers to process massive computations simultaneously.
+  
+  2. Scavenging Grids :
+      A scavenging grid uses a network of regular desktop computers to perform computing tasks by utilizing idle CPU cycles.
+      Uses “spare” computing power of desktops when they are not busy.
+
+  3. Data Grids :
+      A data grid is a distributed system that manages, accesses, modifies, and transfers large volumes of data across multiple locations.
+      Focused on storage and efficient data sharing rather than computation.
+      Ensures reliable access to huge datasets for processing and analysis.
+      ex: Scientific data repositories where multiple research labs access and process massive datasets simultaneously.
+
+//design issues in grids 
+ . heterogrneity : connected systems can have different os, different architecture
+ . Security – How do we trust the solution returned by a node?
+ . Dynamic Nature – When nodes come and go dynamically, how do we obtain the result?(in scavenging grids nodes are not fixed so we have to manage thoe as they might leave  at any time)
+ . network connectivity : nodes might not connect periodically 
+
+//Utility computing 
+   . Focus: Treats computing as a measured service—you pay for CPU, storage, or network usage like a utility.
+   . Scope: Primarily about the billing model and resource usage.
+   . Example: Paying for compute hours or storage without owning hardware.
+
+Utility computing makes computing flexible, cost-efficient, and scalable, just like electricity—you consume and pay according to your need.
+
+utility computing is only about pay-as -you-use whereas cloud computing is the technology platform that delivers those utility -like services 
+cloud computing is broad term not just utility services it also provides other services 
+   platform that provides IaaS, PaaS, SaaS, scalability, accessibility, collaboration, backup, security, and more.
+

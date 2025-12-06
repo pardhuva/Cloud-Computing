@@ -1,0 +1,178 @@
+1
+
+1. deploying my project on the ec2 instance 
+   -> go to ec2 -> instances -> launch instance 
+   -> here lauch by creating a key pair and aserver name and launch it 
+   -> now you have to connect this instance to your project 
+   -> so to connect you have to use you key pair you downloaded nad the ipv4 public address of the instance you created 
+   -> go to gitbash and go to that key folder and ssh "key-pair.pem" ec2-user@public ipv4 address 
+   -> now you were connected to that instance 
+   -> now you have to connect the project so clone the project from github here 
+   -> then go to cd reposotory 
+   -> install the ndoejs or things that is related (sudo yum -y install nodejs)
+   -> now node app.js
+   -> also make sure you modify your project by adding mongodbatlas url and use .env file 
+   -> so until now you installed all the project files onto your instance 
+   -> now you have to connect the port
+   -> so you have to open the port on  security group 
+   -> create a security group so in that current instance go to that instance 
+      and then go to security then to security groups there in edit inbound rules 
+       add current port custom TCP nad current port of the project keeping source from anywhere 0.0.0.0/0
+   -> now in http://public ipv4 address:portno you should see your project 
+     ex: http://13.233.122.56:7000/  currently here i can see my project 
+
+     so if you see the application on the above address 
+     then your project is deployed well and hosted live on aws ec2 instance 
+
+    -> so when the ec2 instance is running only then you can see your application in that address  
+      if it terminated or stopped you cannot see 
+    -> so that is when pm2 came keeps your app running even after you logout 
+
+2. monitor the resources 
+    When you host your project on an EC2 instance:
+
+        CPU Utilization:
+        Measures how much of your server’s CPU is being used. Running your app, serving requests, or heavy computation increases this.
+
+        Memory Usage:
+        Tracks how much RAM your instance consumes. More users or heavier operations = more memory usage.
+
+        Network Traffic:
+        Measures inbound/outbound data. More users downloading pages or assets increases traffic.
+
+        Disk I/O:
+        If your app reads/writes data frequently (like your users.db), disk activity increases.
+
+        you can watch these in your cloudwatch 
+    actaully when the ec2 instance is created a cloudwatch is automatically created to monitor metrics 
+     for every 5seconds the data of teh above metrics is sent from ec2 isntance to the cloudwatch 
+
+     to view the metrics of your project that is on this instance go to that instance then inside there is monitoring tab there you can see all the metrics 
+     you can even create a custom cloudwatch for your custom metrics 
+
+     for more detailed view of metrics you can go to cloudwatch -> metrics -> select the instance 
+     so now you monitored resources 
+
+3. increase the traffic and observe spike 
+   as now in the cpuutilisation in the metric it is below 10 so 
+   lets increase the cpu load and check how the metrics are getting affected 
+
+   ssh -i "Gardenly-server.pem" ubuntu@13.234.213.203
+
+for load got to load/ route on your website and in another git bash 
+ while true; do curl http://<your-public-ip>:7000/load; done
+ to increase the load 
+
+ but cloud watch might take 5 mins for changes to reflect so 
+
+4. enable detailed montoring 
+   for faster updates 
+    select instance-> monitroing tab -> enable detailed moniroting 
+    this refreshes for every minute 
+
+Member 1 – Auto Scaling & Metrics:
+
+  Set up metric-based autoscaling (CPU, memory, requests).
+  Implement scheduled scaling.
+  Prepare graphs/dashboards to show autoscaling in action.
+
+Member 2 – Deployment & Blue-Green:
+
+  Deploy the app on EC2 instances.
+  Set up blue-green deployment for zero-downtime updates.
+  Demonstrate switching traffic between versions safely.
+
+Member 3 – Multi-Region & Presentation:
+
+  Explain multi-region deployment and advantages.
+  Optionally simulate a simple traffic routing between regions.
+  Integrate all features into the final presentation.
+
+
+// fi multiple processes in that port then kill that process 
+sudo lsof -i :<port no>
+sudo kill -9 <process id>
+ now you can run node app.js then you will get the website 
+
+
+5. Memory usage 
+   free -h 
+   this command gives you the amount of memory used 
+
+
+6.  CloudWatch Dashboard
+
+  Purpose: Central place to monitor multiple metrics across one or more instances at the same time.
+  What you can see: CPU, Network, Disk, Scaling activity, etc.
+  Benefit: You can combine all relevant metrics into one view for your demo or monitoring.
+  Customizable: You choose which widgets to add, so it’s easier to visualize scaling events and load together.
+
+2️⃣ EC2 Instance Monitoring Tab (in Console)
+
+    Purpose: Quick, instance-specific monitoring.
+    What you can see: Default metrics like CPU, network, disk I/O.
+    Limitation:
+    You can only view one instance at a time (unless you click through multiple).
+    Harder to see trends across multiple instances or Auto Scaling Groups in one place.
+
+
+ 7. EC2 Auto Scaling using Launch Template & Auto Scaling Group (ASG)
+
+    step1 : start creating launch template 
+           here create security groups with your port and other ports in inbound rules 
+           connect to the instnace subnet
+
+    step 2: create a autoscaling group 
+
+
+//steps 
+
+Step 1: Deploy app to EC2 instance with ASG (base setup)
+
+Step 2: Implement Rolling Deployment
+    → Observe behavior, downtime, user impact
+
+Step 3: Implement Blue-Green Deployment (manual switch)
+    → Deploy new version to Green
+    → Switch via ALB rule manually
+
+Step 4: Implement Blue-Green Deployment (automated switch)
+    → Setup CodeDeploy to automate traffic shift + rollback
+
+Step 5: Compare all 3 methods (Rolling, Manual B-G, Auto B-G)
+    → Use metrics: downtime, safety, time, effort
+
+Final Result: Present table/graph comparing all
+ 
+
+| **Aspect**                   | **Without Custom Dashboard**       | **With Custom Dashboard**                          |
+| ---------------------------- | ---------------------------------- | -------------------------------------------------- |
+| **Visibility**               | Limited; scattered metrics         | Centralized, all metrics at a glance               |
+| **Reaction Time**            | Slower; must check multiple places | Faster; instant monitoring of all critical metrics |
+| **Ease of Traffic Shifting** | Harder; need manual checks         | Easy; can shift traffic safely and confidently     |
+| **Error Detection**          | May miss early warnings            | Immediate alerts with thresholds                   |
+| **Historical Analysis**      | Requires manual log checking       | Built-in trends for optimization                   |
+
+| **Benefit**         | **Effect on Blue-Green Deployment**                         |
+| ------------------- | ----------------------------------------------------------- |
+| Centralized metrics | Easier monitoring of Green environment during traffic shift |
+| Real-time alerts    | Faster reaction to issues, safer deployment                 |
+| Custom metrics      | Track app-specific health beyond server stats               |
+| Historical analysis | Optimize future deployments and scaling policies            |
+
+
+“Instead of using automated traffic shifting—which can be costly due to additional infrastructure,
+ monitoring services, and automation pipelines—we created our own custom CloudWatch dashboard. 
+ This allows us to monitor all critical metrics in real-time and manually shift traffic safely. 
+ It’s simpler, more cost-effective, and avoids the complexity of setting up scripts, Kubernetes, or other automation tools, while still maintaining control and reliability during Blue-Green deployment.”
+
+
+  Key Points to Emphasize
+
+  Cost Savings: No extra services or automation pipelines needed.
+  Simplicity: Manual shifting is easier to implement than automated scripts.
+  Control & Safety: Custom dashboard ensures you can monitor health and rollback instantly.
+  Practical for Small/Medium Scale: Works perfectly for your project without overcomplicating deployment.
+  This makes a strong justification for why you chose manual traffic shifting with a custom dashboard over automated shifting.
+
+  

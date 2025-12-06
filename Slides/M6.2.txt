@@ -1,0 +1,302 @@
+//Encryption 
+   Converting readable data (plaintext) into unreadable data (ciphertext)
+     using a key.
+    Only someone with the correct key can convert it back (decrypt it).
+
+     If someone steals the encrypted text, they cannot understand it.
+
+     why encryption ??
+      protect data , maintain privacy , stop hackers, secure passwords 
+    
+  types of encryption 
+   1. symmetric encryption 
+        Same key for encrypt + decrypt
+        (Like using one key to lock and unlock a door)
+   2.  . Asymmetric Encryption
+        Two keys:
+        Public Key (encrypt)
+        Private Key (decrypt)
+        (Like a mailbox: anyone can drop a letter, but only you have the key to open it)
+
+  1.symmetric/single-key/conventional/secret key encryption 
+     One shared secret key is used by BOTH sender and receiver.
+      If key leaks → attacker can decrypt everything.
+     
+    //requirements for symmetric encryption 
+     1. strong algo -> even he know the algo it should be difficult to find the text -> kerchoffs principle 
+     2. secure key sharing -. secretly exchange the key 
+
+    // attacks to break symmetric encryption 
+     1. cryptanalysis 
+         using known text,cipher text,algorithm weakness 
+     2. brute force -> try every key possible 
+    
+    //symmetric encryption uses block cyphers 
+       Block cipher = data encrypted in fixed-size blocks.
+       Processes the plaintext input in fixed-size blocks and produces a block of ciphertext do equal size of each plaintext block 
+        ex: des(data encryption standard ),triple des , aes (advanced encryption standard )
+         these three are the symmetirc encryption algos 
+          block size - des, triple des(64) ,  aes -128 
+          key -  des-56, triple des -112 or 168  ,   aes - 128,192,256 
+      as key size increases it reduces the vulnerability of brute -force attack 
+    
+   //block cypher encryption - ECB mode (electronci codebook mode )
+     plain text is divided into fixed size blocks p1,p2,p3...
+     Each block is independently encrypted using the same key K.
+     The result is ciphertext blocks: C₁, C₂, …, Cₙ.
+      then decryption - Each block is independently decrypted using the same key K.
+
+      Not secure for long or repetitive messages
+  //stream encryption 
+      A keystream generator creates a stream of pseudorandom bytes using key K.
+      Encryption is done by XOR:
+
+      Ciphertext = Plaintext XOR keystream
+      Plaintext = Ciphertext XOR keystream
+
+     No repeated patterns (more secure than ECB)
+
+//message wuthentication & hash function 
+ why do we need message authentication?
+   Encryption protects only from passive attacks → someone reading your data.
+   But it does NOT protect against active attacks → attacker modifying or injecting data
+   Message Authentication ensures:
+     Integrity → message was not altered
+     Authenticity → message actually came from the correct sender
+  
+  two Ways to Achieve Message Authentication
+   Authentication Using Symmetric Encryption -> this provides confidentiality but not integrity he can modify it 
+    so encryption != integrity 
+  1. Message Authentication Without Message Encryption
+      Sometimes the data doesn't need to be secret.
+     You only want to ensure the data is not changed.
+    Here, we use a Message Authentication Code (MAC) or Hash instead of encryption.
+   Message authentication without encryption sends the plaintext 
+   along with a cryptographic authentication tag (MAC/HMAC).
+    The receiver recomputes the tag and verifies it to
+     ensure message integrity and authenticity.
+  
+  2. using one-way hash function
+      A hash function takes this message and produces a short fixed-length code,
+      This short code is called the hash value or message digest.
+      the hash value is always the same size
+
+      why one-way ??
+      You can easily compute the hash from the message.
+      But you cannot reverse it to get the original message back.
+
+    if you use symmetric encryption then both sides same key 
+    if public key encryption -> then encryption (private key) and decryption (public key)
+  
+  3. usign secret value
+     Normal hash → attacker can modify message + recompute hash
+     But using secret value:
+       Sender adds a secret key to message before hashing
+       sender - Hash = H( Key + Message )
+      So attacker cannot produce a valid new hash if he tries to change the message.
+      receiver - Hash' = H( Key + Message )
+      Receiver uses same key to check hash
+      Attacker cannot produce correct hash (no key)
+      So message cannot be modified secretly
+      This is message authentication using HMAC.
+
+
+      Without secret key:
+      Hash = H(message)
+      Attacker can modify message + compute new hash
+      No protection
+
+      With secret key:
+      Hash = H(secret + message)
+      Attacker cannot compute correct hash (doesn't know secret)
+      Receiver detects any tampering
+      This matches your diagram exactly.
+
+  secure hash function :
+     A secure hash function is a function that takes any message and produces a small fixed-size fingerprint (called a hash or digest).
+     used for :
+      message authentication,digital signatures, password storage , intrusion detection 
+
+   why one-way ?
+    You cannot reverse the hash to get the message.
+     You cannot guess a message that produces a given hash.
+     You cannot find two messages with the same hash.
+    
+    hash function requirements :
+     H can take input of any size 
+     H produces fixed length output 
+     H(x) should be easy to compute 
+       function should be fast,efficientmeasy to implement 
+    
+    one-way hash 
+    H(x) = h  Given a hash value h, it should be impossible to find a message x such that:
+
+    Weak Collision Resistance :
+     Given one message x, it should be impossible to find another message y (y ≠ x) such that:
+      H(y) = H(x)
+    Strong Collision Resistance :
+      It must be impossible to find any two messages x and y such that:
+      H(x) = H(y)
+     
+    | Property                  | Meaning                                          |
+    | ------------------------- | ------------------------------------------------ |
+    | Any size input            | Hash any message                                 |
+    | Fixed output              | Always same length hash                          |
+    | Easy to compute           | Fast                                             |
+    | Preimage resistant        | Can't reverse hash                               |
+    | Second preimage resistant | Can't find another message with same hash        |
+    | Collision resistant       | Can't find two different messages with same hash |
+
+    hash function applications 
+     1. password storage - websites dont store original password they store hashed password so even the database is leaked original password cant be found 
+     2. Systems check file hashes. - If the hash changes → file was modified → intrusion.
+
+
+//public key encryption 
+  Public Key Encryption is also called Asymmetric Cryptography.
+  Because it uses two different keys:
+   Public Key → shared with everyone
+   Private Key → kept secret by the owner
+
+    Each user generates their own key pair
+    Public key is shared openly, Private key must stay secret.
+  
+  1. encryption with public key - (Used for confidentiality)
+     ex: suppose alice wants to send a secret messgage to bob now usign encryption with public key 
+      bob shares his public key with alice 
+      alice encrypts message with bobs public key 
+      only bob decrypt it bob has the private key 
+    Only Bob can read the message.
+    No one else, even if they know Bob’s public key.
+    so we use both the keys of receiver public for encryption and private for decryption 
+
+  2. encryption with private key - (Used for digital signatures)
+      Sender (Alice) encrypts or signs using her private key.
+      Anyone can verify it using her public key.
+      Everyone can check the message is really from Alice.
+      This gives authentication + non-repudiation
+      here we use both the keys fo sender at encryption - private and decryption - public 
+
+      | Operation                     | Key Used    | Purpose                    | Who Can Decrypt/Verify  |
+| ----------------------------- | ----------- | -------------------------- | ----------------------- |
+| Encrypt with Public Key       | Public Key  | Confidentiality            | Only Private Key holder |
+| Encrypt/Sign with Private Key | Private Key | Authentication, Signatures | Anyone with Public Key  |
+
+ Three Big Uses of Public Key Cryptography
+    Confidentiality → encrypt with public key
+    Digital Signatures → sign with private key
+    Key Exchange → secure creation of symmetric keys
+
+ 
+ applications of public key cryptosystem 
+ 1. digital signature 
+ 2. symmetric key distribution 
+ 3. encryption of secret keys 
+
+ requirements of public key cryptosystem 
+  1. easy for a party b to generate a pair of keys 
+  2. sender A c = E(pub,M)
+  3. receiver b M = D(PRb,C)
+  4. shoudl be infeasible to determine provate key even he knows public key 
+
+
+//Digital signature 
+   to prove who sent the message (authentication)
+   to prove message was nto changed (integrity)
+
+   1. hash the message 
+       A hash (fixed-size fingerprint) of the message is created.
+       If the message changes even a little, the hash changes completely.
+   2.  Encrypt the hash with the sender’s PRIVATE key
+        This encrypted hash is the digital signature.
+        Only the sender has their private key → so signature proves who signed it.
+   3. Send (message + signature)
+   4.  Receiver decrypts the signature using sender’s PUBLIC key
+       If it decrypts properly → signature is valid.
+   5.  Receiver also hashes the message
+        Compares it with the decrypted hash.
+      
+      If both hashes match → Signature is valid
+        Message came from the real sender
+        ✔ Message was not changed
+
+    Digital signature = Hash + Encrypt hash with PRIVATE key.
+    Verification = Decrypt with PUBLIC key + compare hash.
+
+//digital envilopes 
+   A digital envelope is used to send a message secretly.
+
+  Symmetric encryption (AES) is very fast, but key sharing is hard.
+  Public key encryption (RSA) is secure, but very slow for big messages.
+  so use both 
+
+   DIGITAL ENVELOPE =
+Encrypt the message with a symmetric key + Encrypt the symmetric key with receiver’s public key
+
+   steps :
+    Step 1: Generate a random symmetric key
+    Step 2: Encrypt the message using this symmetric key
+    Step 3: Encrypt the symmetric key using receiver’s PUBLIC key
+    Step 4: Send BOTH
+        Sender sends:
+            Encrypted Message
+            Encrypted Symmetric Key
+
+     This combination = Digital Envelope
+    Step 5: Decrypt the symmetric key using receiver’s PRIVATE key
+    Step 6: Use the symmetric key to decrypt the message
+    Now the receiver gets the original message.
+
+   Digital envelope = encrypt message with symmetric key + encrypt symmetric key with receiver’s public key for secure delivery.
+
+
+//user authentication 
+  
+ 1. identification step - who you are - presenting an identifier to the security system 
+ 2.  verification step - prove it - present authentication information 
+
+ //authentication factor 
+   something the individual 
+   knows  - passwords/pin 
+   possess - smart card,token 
+   is - fingerprint, retina 
+   deos - voice, typing behaviour 
+
+
+//password based authentication 
+  The most common method of authentication where the user proves identity using a password.
+
+  vulnerabilites of passwords 
+   | **Vulnerability**                       | **Simple Explanation**                                                                                  |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Offline Dictionary Attack**           | Attacker steals the hashed password file and tries millions of guesses offline.                         |
+| **Specific Account Attack**             | Attacker targets one important user (e.g., admin) and tries to guess their password.                    |
+| **Popular Password Attack**             | Attacker tries very common passwords like `123456`, `password`, `admin`.                                |
+| **Password Guessing for a Single User** | Attacker knows a username and keeps trying different passwords for that user.                           |
+| **Workstation Hijacking**               | User leaves system unlocked → attacker uses the open session.                                           |
+| **Exploiting User Mistakes**            | Users click phishing links, type passwords in wrong places, reuse weak passwords, write them down, etc. |
+| **Exploiting Multiple Password Use**    | User uses the same password on many sites → if one leaks, all accounts are compromised.                 |
+| **Electronic Monitoring**               | Passwords stolen using sniffing tools, keyloggers, or shoulder surfing.                                 |
+
+
+  //hashed passwords 
+     Instead of storing passwords as plain text:
+      System stores hash(password + salt)
+      Password is never stored directly.
+
+      Even if attacker steals the password file, he won’t see real passwords.
+      ✔ Hash is one-way — cannot be reversed.
+  
+  //what is salt 
+     A random value added to the password before hashing.
+    why salt ?
+     1. Prevents duplicate passwords from looking the same
+     2. Makes dictionary attacks much harder
+     3. Prevents checking password reuse across systems
+
+  //Hashed passwords + salts are stored in a separate protected file called the shadow password file.
+    This protects against attackers reading password hashes.
+
+    Password security = Hashing + Salt + Shadow file
+    to protect against dictionary attacks, reuse attacks, and stolen password hashes.
+

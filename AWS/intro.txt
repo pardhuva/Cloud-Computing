@@ -1,0 +1,53 @@
+
+what is aws ?
+-> it is amazon web services 
+-> it is a global cloud platform which allows you to host and manage services on the internet 
+-> max all the companies use aws to host their infrastructure 
+-> infrastructure as a service -> provide servers so we dont need to manage the power .backup and all 
+-> platform as a service -> no need to manage the application 
+-> software as a service 
+-> cloud storage platform 
+
+-> overall aws is  a hosting provider where you can run our applcaitions on the cloud 
+
+why it is such a big hit?
+-> per our billing 
+-> easy sign  up process 
+-> stability 
+-> trusted vendor 
+
+
+services overview 
+1. EC2 (Elastic Compute Cloud) 
+    -> gives you bare servers 
+    -> so this service gives you machine which you can launch and you can run software on those 
+    -> you can get small or big machines based on your requirements 
+
+2. VPC (Virtual Private Cloud) 
+    -> as amazon dont allow you have full control over the cloud rather 
+       it gives you chunks of their cloud which is vpc 
+    -> it lets you create the networks on the cloud and then run your servers in those networks 
+
+3. S3(Simple storage service) 
+    -> it gives you the oppurtunity to upload and share files 
+    -> mostly a file storage and sharing service 
+
+4. RDS (Relational database service)
+    -> allows you to run and manage databases  on the cloud 
+    -> they get almost all the major flavors of databases right from sql server 
+        (aurora) -> high performance database 
+
+5. Route 53 
+   -> manage dns service 
+   -> where you point your dns to them they take care of the stuff 
+   -> global and scalable dns service scales according to the demand 
+
+6. (ELB) Elastice Load Balancing
+   -> it gives you oppurtunity to load balance incoming traffic  to multiple machines 
+
+7. Autoscaling 
+   -> which loads capacity on the fly to elastic load balancers  
+   -> so the application is never down due to the load 
+
+
+ 
